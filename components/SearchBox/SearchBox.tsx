@@ -1,0 +1,14 @@
+"use client";
+
+import css from "./SearchBox.module.css";
+
+export default function SearchBox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <input
+      className={css.input}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Search notes..."
+    />
+  );
+}
