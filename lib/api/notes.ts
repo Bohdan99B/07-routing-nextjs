@@ -1,17 +1,5 @@
-import axios from "axios";
 import type { Note, NoteTag } from "@/types/note";
-
-const API_URL = "https://notehub-public.goit.study/api/notes";
-const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-  // Avoid Node proxy auto-resolution path that triggers url.parse deprecation warnings.
-  proxy: false,
-  headers: {
-    Authorization: `Bearer ${TOKEN}`,
-  },
-});
+import { apiClient } from "./client";
 
 export interface FetchNotesParams {
   search?: string;
@@ -35,21 +23,21 @@ export interface CreateNoteParams {
 export async function fetchNotes(
   params: FetchNotesParams = {}
 ): Promise<FetchNotesResponse> {
-  const res = await axiosInstance.get<FetchNotesResponse>("/", { params });
+  const res = await apiClient.get<FetchNotesResponse>("/", { params });
   return res.data;
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
-  const res = await axiosInstance.get<Note>(`/${id}`);
+  const res = await apiClient.get<Note>(`/${id}`);
   return res.data;
 }
 
 export async function createNote(note: CreateNoteParams): Promise<Note> {
-  const res = await axiosInstance.post<Note>("/", note);
+  const res = await apiClient.post<Note>("/", note);
   return res.data;
 }
 
 export async function deleteNote(id: string): Promise<{ id: string }> {
-  const res = await axiosInstance.delete<{ id: string }>(`/${id}`);
+  const res = await apiClient.delete<{ id: string }>(`/${id}`);
   return res.data;
 }

@@ -6,15 +6,11 @@ import { getQueryClient } from "@/lib/queryClient";
 import { NOTE_TAGS, type NoteTag } from "@/types/note";
 
 interface FilterNotesPageProps {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ slug: string[] }>;
 }
 
-function resolveTag(slug?: string[]): NoteTag | undefined {
-  if (!slug || slug.length === 0) {
-    return undefined;
-  }
-
-  if (slug.length > 1) {
+function resolveTag(slug: string[]): NoteTag | undefined {
+  if (slug.length !== 1) {
     notFound();
   }
 
